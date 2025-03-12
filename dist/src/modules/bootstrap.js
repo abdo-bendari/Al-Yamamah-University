@@ -20,7 +20,6 @@ const bootstrap = (app) => {
     });
     app.use(express_1.default.json());
     const baseUrl = "/api/v1";
-    app.use("/uploads", express_1.default.static("uploads"));
     // Uncomment these routes once you have the routers ready
     app.use(`${baseUrl}/auth`, auth_routes_1.default);
     app.use(`${baseUrl}/users`, user_routes_1.default);
