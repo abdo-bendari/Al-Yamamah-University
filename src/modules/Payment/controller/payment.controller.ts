@@ -29,8 +29,8 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
         },
       ],
       mode: "payment",
-      success_url: "https://yourdomain.com/success", // استبدلها برابط النجاح الفعلي
-      cancel_url: "https://yourdomain.com/cancel", // استبدلها برابط الإلغاء الفعلي
+      success_url: "https://yourdomain.com/success", 
+      cancel_url: "https://yourdomain.com/cancel", 
     });
 
     res.status(200).json({ id: session.id });
