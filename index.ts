@@ -7,7 +7,6 @@ import morgan from "morgan";
 import bootstrap from "./src/modules/bootstrap";
 import dotenv from "dotenv";
 dotenv.config();
-
 const app: Express = express();
 dbConnection();
 app.use(cors());
