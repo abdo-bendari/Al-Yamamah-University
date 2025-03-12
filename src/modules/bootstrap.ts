@@ -16,15 +16,14 @@ const bootstrap = (app: Express) => {
   });
   app.use(express.json());
   const baseUrl = "/api/v1";
-  app.use("/uploads", express.static("uploads"));
   // Uncomment these routes once you have the routers ready
   app.use(`${baseUrl}/auth`, authRouter);
   app.use(`${baseUrl}/users`, userRouter);
   app.use(`${baseUrl}/courses`, courseRouter);
   app.use(`${baseUrl}/categories`, categoryRouter);
-  app.use(`${baseUrl}/levels`,levelRouter );
-   app.use(`${baseUrl}/enrollments`, enrollmentRouter);
-    app.use(`${baseUrl}/payments`, paymentRouter);
+  app.use(`${baseUrl}/levels`, levelRouter);
+  app.use(`${baseUrl}/enrollments`, enrollmentRouter);
+  app.use(`${baseUrl}/payments`, paymentRouter);
   app.use(`${baseUrl}/contact`, contactRouter);
 
   app.use("*", (req: Request, res: Response, next: NextFunction) => {
