@@ -9,6 +9,8 @@ const dbConnection_1 = require("./database/dbConnection");
 const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
 const bootstrap_1 = __importDefault(require("./src/modules/bootstrap"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, dbConnection_1.dbConnection)();
 app.use((0, cors_1.default)());
@@ -16,7 +18,7 @@ app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
 app.use((0, helmet_1.default)());
 (0, bootstrap_1.default)(app);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
