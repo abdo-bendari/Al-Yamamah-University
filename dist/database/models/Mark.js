@@ -32,18 +32,39 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const E = __importStar(require("./controller/enrollment.controller"));
-const authentication_1 = __importStar(require("../../middleware/authentication"));
-const enrollmentRouter = express_1.default.Router();
-enrollmentRouter
-    .post("/enroll", authentication_1.default, E.enrollUser)
-    .get("/user/:userId/", authentication_1.default, E.getUserEnrollments)
-    .get("/:enrollmentId", authentication_1.default, E.getEnrollment)
-    .patch("/:enrollmentId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), E.updateEnrollment)
-    .delete("/:enrollmentId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), E.deleteEnrollment);
-exports.default = enrollmentRouter;
+exports.MarkStatus = void 0;
+const mongoose_1 = __importStar(require("mongoose"));
+var MarkStatus;
+(function (MarkStatus) {
+    MarkStatus["COMPLETED"] = "completed";
+    MarkStatus["PENDING"] = "pending";
+    MarkStatus["FAILED"] = "failed";
+})(MarkStatus || (exports.MarkStatus = MarkStatus = {}));
+const calculateGrade = (score, officialScore) => {
+    const percentage = (score / officialScore) * 100;
+    if (percentage >= 90)
+        return "A";
+    if (percentage >= 80)
+        return "B";
+    if (percentage >= 70)
+        return "C";
+    if (percentage >= 60)
+        return "D";
+    return "F";
+};
+const MarkSchema = new mongoose_1.Schema({
+    user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    course: { type: mongoose_1.Schema.Types.ObjectId, ref: "Course", required: true },
+    instructor: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    officialScore: { type: Number, required: true },
+    score: { type: Number, required: true },
+    creditHours: { type: Number, required: true },
+    grade: { type: String },
+    status: { type: String, enum: Object.values(MarkStatus), default: MarkStatus.PENDING },
+}, { timestamps: true });
+MarkSchema.pre("save", function (next) {
+    this.grade = calculateGrade(this.score, this.officialScore);
+    next();
+});
+exports.default = mongoose_1.default.model("Mark", MarkSchema);

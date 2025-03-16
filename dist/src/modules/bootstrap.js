@@ -14,6 +14,7 @@ const level_routes_1 = __importDefault(require("./Level/level.routes"));
 const enrollment_routes_1 = __importDefault(require("./Enrollment/enrollment.routes"));
 const payment_routes_1 = __importDefault(require("./Payment/payment.routes"));
 const contact_routes_1 = __importDefault(require("./ContactUs/contact.routes"));
+const mark_routes_1 = __importDefault(require("./Mark/mark.routes"));
 const bootstrap = (app) => {
     process.on("uncaughtException", (err) => {
         console.error("Uncaught Exception:", err);
@@ -29,6 +30,7 @@ const bootstrap = (app) => {
     app.use(`${baseUrl}/enrollments`, enrollment_routes_1.default);
     app.use(`${baseUrl}/payments`, payment_routes_1.default);
     app.use(`${baseUrl}/contact`, contact_routes_1.default);
+    app.use(`${baseUrl}/marks`, mark_routes_1.default);
     app.use("*", (req, res, next) => {
         next(new Error_1.AppError("Route not found", 404));
     });

@@ -37,13 +37,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const E = __importStar(require("./controller/enrollment.controller"));
 const authentication_1 = __importStar(require("../../middleware/authentication"));
-const enrollmentRouter = express_1.default.Router();
-enrollmentRouter
-    .post("/enroll", authentication_1.default, E.enrollUser)
-    .get("/user/:userId/", authentication_1.default, E.getUserEnrollments)
-    .get("/:enrollmentId", authentication_1.default, E.getEnrollment)
-    .patch("/:enrollmentId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), E.updateEnrollment)
-    .delete("/:enrollmentId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), E.deleteEnrollment);
-exports.default = enrollmentRouter;
+const M = __importStar(require("./controller/mark.controller"));
+const markRouter = express_1.default.Router();
+markRouter
+    .post("/", authentication_1.default, (0, authentication_1.allowedTo)("faculty"), M.addMark)
+    .patch("/:markId", authentication_1.default, (0, authentication_1.allowedTo)("faculty"), M.updateMark)
+    .get("/student/:userId", authentication_1.default, M.getMarksForStudent)
+    .get("/course/:courseId", authentication_1.default, M.getMarksForCourse)
+    .delete("/:markId", authentication_1.default, (0, authentication_1.allowedTo)("faculty"), M.deleteMark);
+exports.default = markRouter;

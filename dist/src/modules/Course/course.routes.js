@@ -43,12 +43,20 @@ const validation_1 = __importDefault(require("../../middleware/validation"));
 const course_validation_1 = __importDefault(require("./course.validation"));
 const courseRouter = express_1.default.Router();
 courseRouter
-    .post("/", authentication_1.default, (0, authentication_1.allowedTo)("admin", "instructor"), (0, validation_1.default)(course_validation_1.default), C.createCourse)
+    .post("/", authentication_1.default, (0, authentication_1.allowedTo)("admin", "faculty"), (0, validation_1.default)(course_validation_1.default), C.createCourse)
     .get("/", authentication_1.default, C.getAllCourses)
     .get("/:id", authentication_1.default, C.getCourseById)
     .get("/search/:search", authentication_1.default, C.getCourseByTitleOrDescription)
     .get("/instructor/:instructorId", authentication_1.default, C.getCoursesByInstructor)
     .get("/category/:categoryId", authentication_1.default, C.getCoursesByCategory)
-    .put("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin", "instructor"), C.updateCourse)
-    .delete("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin", "instructor"), C.deleteCourse);
+    .put("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin", "faculty"), C.updateCourse)
+    .delete("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), C.deleteCourse);
+// متنساش البجينيشن
+//السيرش اللي فوق بكل حاجه 
+// ترتيب لليفلات 
+// الكاتيجوري 
+// السيرش بحرفين حتي
+// السيرش بالانستراكتور
+// خش علي راوتس اليوزر
+// ضيف الماركس 
 exports.default = courseRouter;

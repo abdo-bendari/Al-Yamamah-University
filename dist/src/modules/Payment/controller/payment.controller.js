@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCheckoutSession = void 0;
 const stripe_1 = __importDefault(require("stripe"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -41,11 +40,11 @@ const createCheckoutSession = (req, res) => __awaiter(void 0, void 0, void 0, fu
             success_url: "https://yourdomain.com/success",
             cancel_url: "https://yourdomain.com/cancel",
         });
-        res.status(200).json({ id: session.id });
+        return res.status(200).json({ id: session.id });
     }
     catch (error) {
         console.error("Stripe Error:", error);
         res.status(500).json({ error: "Failed to create checkout session." });
     }
 });
-exports.createCheckoutSession = createCheckoutSession;
+exports.default = createCheckoutSession;

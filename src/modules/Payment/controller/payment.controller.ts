@@ -6,7 +6,7 @@ dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export const createCheckoutSession = async (req: Request, res: Response) => {
+ const createCheckoutSession = async (req: Request, res: Response) => {
   try {
     const { amount, currency, courseId, levelId } = req.body;
 
@@ -33,9 +33,11 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       cancel_url: "https://yourdomain.com/cancel", 
     });
 
-    res.status(200).json({ id: session.id });
+   return res.status(200).json({ id: session.id });
   } catch (error) {
     console.error("Stripe Error:", error);
     res.status(500).json({ error: "Failed to create checkout session." });
   }
 };
+
+export default createCheckoutSession;

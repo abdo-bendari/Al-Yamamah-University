@@ -6,7 +6,7 @@ import courseValidationSchema from './course.validation';
 
 const courseRouter = express.Router();
 courseRouter
-.post("/",protectedRoutes,allowedTo("admin","instructor"),validation(courseValidationSchema), C.createCourse)
+.post("/",protectedRoutes,allowedTo("admin","faculty"),validation(courseValidationSchema), C.createCourse)
 
 .get("/", protectedRoutes,C.getAllCourses)
 
@@ -18,9 +18,17 @@ courseRouter
 
 .get("/category/:categoryId", protectedRoutes,C.getCoursesByCategory)
 
-.put("/:courseId",protectedRoutes ,allowedTo("admin","instructor"),C.updateCourse)
+.put("/:courseId",protectedRoutes ,allowedTo("admin","faculty"),C.updateCourse)
 
-.delete("/:courseId", protectedRoutes ,allowedTo("admin","instructor"),C.deleteCourse);
+.delete("/:courseId", protectedRoutes ,allowedTo("admin"),C.deleteCourse);
+// متنساش البجينيشن
+//السيرش اللي فوق بكل حاجه 
+// ترتيب لليفلات 
+// الكاتيجوري 
+// السيرش بحرفين حتي
+// السيرش بالانستراكتور
+// خش علي راوتس اليوزر
+// ضيف الماركس 
 
 
 export default courseRouter;
