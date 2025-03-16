@@ -27,7 +27,6 @@ const UserSchema: Schema<IUser> = new Schema(
     lastName: { type: String, required: true, trim: true },
     phone: {
       type: String,
-      required: true,
       unique: true,
       match: [/^\+?\d{10,15}$/, "Invalid phone number format"],
     },

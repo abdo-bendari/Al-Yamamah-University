@@ -12,9 +12,11 @@ dotenv.config();
 export const signUp = catchError(
   async (req: Request, res: Response, next: NextFunction) => {
     const { role, firstName, lastName, phone, email, password, timezone } = req.body;
-    if (Object.values(req.body).some((value) => !value)) {
-      return next(new AppError("Please fill all the fields", 400));
-    }
+   if (!role || !firstName || !lastName || !email || !password || !timezone){
+      return next(new AppError("Please provide all required fields", 400));
+
+   }
+
     let user = new User({
       role,
       firstName,
@@ -26,7 +28,7 @@ export const signUp = catchError(
     });
     await user.save();
     const token = jwt.sign( { userId: user._id, role: user.role },process.env.JWT_KEY as string);
-    res.status(200).json({ message: "Signup successful", token, status: 200 });
+    return res.status(200).json({ message: "Signup successful", token, status: 200 });
   }
 );
 

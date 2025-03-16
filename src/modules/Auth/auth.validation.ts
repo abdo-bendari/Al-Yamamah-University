@@ -7,8 +7,7 @@ import Joi from "joi";
   firstName: Joi.string().trim().min(2).max(50).required(),
   lastName: Joi.string().trim().min(2).max(50).required(),
   phone: Joi.string()
-    .pattern(/^\+?\d{10,15}$/)
-    .required(),
+    .pattern(/^\+?\d{10,15}$/),
   email: Joi.string().email().lowercase().trim().required(),
   password: Joi.string()
     .min(6)

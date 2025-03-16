@@ -6,7 +6,7 @@ const markRouter = express.Router();
 
 markRouter
 
-.post("/", protectedRoutes,allowedTo("faculty") ,M.addMark)
+.post("/add", protectedRoutes,allowedTo("faculty") ,M.addMark)
 
 .patch("/:markId", protectedRoutes,allowedTo("faculty") , M.updateMark)
 
