@@ -49,7 +49,9 @@ courseRouter
     .get("/search/:search", authentication_1.default, C.getCourseByTitleOrDescription)
     .get("/instructor/:instructorId", authentication_1.default, C.getCoursesByInstructor)
     .get("/category/:categoryId", authentication_1.default, C.getCoursesByCategory)
+    .get("/courseReviews/:courseId", authentication_1.default, C.getCourseReviews)
     .put("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin", "faculty"), C.updateCourse)
+    .put("/addReview/:courseId", authentication_1.default, C.addCourseReview)
     .delete("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), C.deleteCourse);
 // متنساش البجينيشن
 //السيرش اللي فوق بكل حاجه 

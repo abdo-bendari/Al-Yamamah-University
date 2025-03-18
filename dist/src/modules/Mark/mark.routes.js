@@ -41,7 +41,7 @@ const authentication_1 = __importStar(require("../../middleware/authentication")
 const M = __importStar(require("./controller/mark.controller"));
 const markRouter = express_1.default.Router();
 markRouter
-    .post("/", authentication_1.default, (0, authentication_1.allowedTo)("faculty"), M.addMark)
+    .post("/add", authentication_1.default, (0, authentication_1.allowedTo)("faculty"), M.addMark)
     .patch("/:markId", authentication_1.default, (0, authentication_1.allowedTo)("faculty"), M.updateMark)
     .get("/student/:userId", authentication_1.default, M.getMarksForStudent)
     .get("/course/:courseId", authentication_1.default, M.getMarksForCourse)

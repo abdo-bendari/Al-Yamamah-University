@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.getCoursesByCategory = exports.getCoursesByInstructor = exports.getCourseByTitleOrDescription = exports.getCourseById = exports.getAllCourses = exports.createCourse = void 0;
+exports.deleteCourse = exports.updateCourse = exports.getCourseReviews = exports.addCourseReview = exports.getCoursesByCategory = exports.getCoursesByInstructor = exports.getCourseByTitleOrDescription = exports.getCourseById = exports.getAllCourses = exports.createCourse = void 0;
 const catchError_1 = __importDefault(require("../../../middleware/catchError"));
 const Error_1 = require("../../../utils/Error");
 const Course_1 = __importDefault(require("../../../../database/models/Course"));
@@ -117,6 +117,46 @@ exports.getCoursesByCategory = (0, catchError_1.default)((req, res, next) => __a
         return next(new Error_1.AppError("No courses found for this category", 404));
     }
     return res.status(200).json({ status: "success", results: courses.length, courses });
+}));
+exports.addCourseReview = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const { rating, comment } = req.body;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
+    const { courseId } = req.params;
+    if (!courseId || !rating || !comment) {
+        return next(new Error_1.AppError("Please provide all required fields", 400));
+    }
+    if (!userId) {
+        return next(new Error_1.AppError("User not authenticated", 401));
+    }
+    if (rating < 1 || rating > 5) {
+        return next(new Error_1.AppError("Rating must be between 1 and 5", 400));
+    }
+    const course = yield Course_1.default.findById(courseId);
+    if (!course) {
+        return next(new Error_1.AppError("Course not found", 404));
+    }
+    const review = {
+        user: userId,
+        rating,
+        comment,
+    };
+    course.reviews.push(review);
+    const totalRating = course.reviews.reduce((acc, review) => review.rating + acc, 0);
+    course.rating = totalRating / course.reviews.length;
+    yield course.save();
+    return res.status(200).json({ status: "success", message: "Review added successfully" });
+}));
+exports.getCourseReviews = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { courseId } = req.params;
+    const reviews = yield Course_1.default.findById(courseId).select("reviews").populate({
+        path: "reviews.user",
+        select: "firstName lastName ",
+    }).select("-__v -createdAt -updatedAt");
+    if (!reviews) {
+        return next(new Error_1.AppError("Course not found", 404));
+    }
+    return res.status(200).json({ status: "success", results: reviews.reviews.length, reviews });
 }));
 exports.updateCourse = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { courseId } = req.params;

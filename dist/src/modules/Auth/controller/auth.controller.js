@@ -24,8 +24,8 @@ const sendEmail_1 = __importDefault(require("../../../utils/sendEmail"));
 dotenv_1.default.config();
 exports.signUp = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { role, firstName, lastName, phone, email, password, timezone } = req.body;
-    if (Object.values(req.body).some((value) => !value)) {
-        return next(new Error_1.AppError("Please fill all the fields", 400));
+    if (!role || !firstName || !lastName || !email || !password || !timezone) {
+        return next(new Error_1.AppError("Please provide all required fields", 400));
     }
     let user = new User_1.default({
         role,
@@ -38,7 +38,7 @@ exports.signUp = (0, catchError_1.default)((req, res, next) => __awaiter(void 0,
     });
     yield user.save();
     const token = jsonwebtoken_1.default.sign({ userId: user._id, role: user.role }, process.env.JWT_KEY);
-    res.status(200).json({ message: "Signup successful", token, status: 200 });
+    return res.status(200).json({ message: "Signup successful", token, status: 200 });
 }));
 exports.signIn = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;

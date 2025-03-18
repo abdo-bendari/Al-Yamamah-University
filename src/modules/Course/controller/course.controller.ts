@@ -138,6 +138,57 @@ export const getCoursesByCategory = catchError(async (req: Request, res: Respons
     return res.status(200).json({ status: "success", results: courses.length, courses });
   }
 );
+export const addCourseReview = catchError(async (req: Request, res: Response, next: NextFunction) => {
+  const {  rating, comment } = req.body;
+  const userId = req.user?.userId; 
+  const {courseId} = req.params;
+
+  if (!courseId || !rating || !comment) {
+      return next(new AppError("Please provide all required fields", 400));
+  }
+
+  if (!userId) {
+      return next(new AppError("User not authenticated", 401));
+  }
+
+  if (rating < 1 || rating > 5) {
+      return next(new AppError("Rating must be between 1 and 5", 400));
+  }
+
+  const course = await Course.findById(courseId);
+  if (!course) {
+      return next(new AppError("Course not found", 404));
+  }
+
+  const review = {
+      user: userId,
+      rating,
+      comment,
+  };
+
+  course.reviews.push(review);
+
+  const totalRating = course.reviews.reduce((acc, review) => review.rating + acc, 0);
+  course.rating = totalRating / course.reviews.length;
+
+  await course.save();
+  return res.status(200).json({ status: "success", message: "Review added successfully" });
+});
+
+export const getCourseReviews = catchError(async (req: Request, res: Response, next: NextFunction) => {
+    const { courseId } = req.params;
+    const reviews = await Course.findById(courseId).select("reviews").populate({
+      path: "reviews.user",
+      select: "firstName lastName ",
+    }).select("-__v -createdAt -updatedAt")
+
+    if (!reviews) {
+      return next(new AppError("Course not found", 404));
+    }
+
+    return res.status(200).json({ status: "success", results: reviews.reviews.length, reviews });
+  }
+);
 
 export const updateCourse = catchError(async (req: Request, res: Response, next: NextFunction) => {
     const { courseId } = req.params;

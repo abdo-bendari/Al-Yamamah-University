@@ -11,8 +11,7 @@ const userValidationSchema = joi_1.default.object({
     firstName: joi_1.default.string().trim().min(2).max(50).required(),
     lastName: joi_1.default.string().trim().min(2).max(50).required(),
     phone: joi_1.default.string()
-        .pattern(/^\+?\d{10,15}$/)
-        .required(),
+        .pattern(/^\+?\d{10,15}$/),
     email: joi_1.default.string().email().lowercase().trim().required(),
     password: joi_1.default.string()
         .min(6)

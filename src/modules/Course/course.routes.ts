@@ -17,8 +17,10 @@ courseRouter
 .get("/instructor/:instructorId", protectedRoutes,C.getCoursesByInstructor)
 
 .get("/category/:categoryId", protectedRoutes,C.getCoursesByCategory)
+.get("/courseReviews/:courseId", protectedRoutes,C.getCourseReviews)
 
 .put("/:courseId",protectedRoutes ,allowedTo("admin","faculty"),C.updateCourse)
+.put("/addReview/:courseId",protectedRoutes ,C.addCourseReview)
 
 .delete("/:courseId", protectedRoutes ,allowedTo("admin"),C.deleteCourse);
 // متنساش البجينيشن

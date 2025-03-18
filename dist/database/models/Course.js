@@ -59,7 +59,7 @@ const CourseSchema = new mongoose_1.Schema({
             {
                 comment: { type: String, required: true },
                 rating: { type: Number, required: true },
-                user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+                user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
             },
         ],
         default: [],
