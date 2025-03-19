@@ -7,7 +7,7 @@ const userRouter = express.Router();
 userRouter
 
 .get("/students", protectedRoutes,U.getStudents)
-.get("/faculty", protectedRoutes,U.getFaculty)
+.get("/instructors", protectedRoutes,U.getFaculty)
 .get("/organizations", protectedRoutes,U.getOrganizations)
 
 .get("/students/count", protectedRoutes,U.getStudentsCount)
