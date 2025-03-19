@@ -6,16 +6,16 @@ const userRouter = express.Router();
 
 userRouter
 
-.get("/students", U.getStudents)
-.get("/faculty", U.getFaculty)
-.get("/organizations", U.getOrganizations)
+.get("/students", protectedRoutes,U.getStudents)
+.get("/faculty", protectedRoutes,U.getFaculty)
+.get("/organizations", protectedRoutes,U.getOrganizations)
 
-.get("/students/count", U.getStudentsCount)
-.get("/faculty/count", U.getFacultyCount)
-.get("/organizations/count", U.getOrganizationsCount)
+.get("/students/count", protectedRoutes,U.getStudentsCount)
+.get("/faculty/count",protectedRoutes,U.getFacultyCount)
+.get("/organizations/count", protectedRoutes,U.getOrganizationsCount)
 
-.get("/by-name/:name", U.getUserByName)
-.get("/byId/:id", U.getUserById)
+.get("/by-name/:name", protectedRoutes,U.getUserByName)
+.get("/byId/:id", protectedRoutes,U.getUserById)
 
 .put("/update",protectedRoutes,U.updateProfile)
 .patch("/profilePic",protectedRoutes,U.uploadProfilePicture)

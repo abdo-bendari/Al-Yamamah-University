@@ -23,14 +23,6 @@ courseRouter
 .put("/addReview/:courseId",protectedRoutes ,C.addCourseReview)
 
 .delete("/:courseId", protectedRoutes ,allowedTo("admin"),C.deleteCourse);
-// متنساش البجينيشن
-//السيرش اللي فوق بكل حاجه 
-// ترتيب لليفلات 
-// الكاتيجوري 
-// السيرش بحرفين حتي
-// السيرش بالانستراكتور
-// خش علي راوتس اليوزر
-// ضيف الماركس 
 
 
 export default courseRouter;

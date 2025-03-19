@@ -14,7 +14,6 @@ export const createContact = catchError(async (req: Request, res: Response, next
   
     return res.status(201).json({
       message: "Message sent successfully",
-      contact,
     });
   });
   
