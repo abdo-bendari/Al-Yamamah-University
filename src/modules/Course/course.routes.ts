@@ -19,8 +19,8 @@ courseRouter
 .get("/category/:categoryId", protectedRoutes,C.getCoursesByCategory)
 .get("/courseReviews/:courseId", protectedRoutes,C.getCourseReviews)
 
-.get("/freeCourses", protectedRoutes,C.getFreeCourses)
-.get("/paidCourses", protectedRoutes,C.getPaidCourses)
+.get("/status/freeCourses", protectedRoutes,C.getFreeCourses)
+.get("/status/paidCourses", protectedRoutes,C.getPaidCourses)
 
 .put("/:courseId",protectedRoutes ,allowedTo("admin","faculty"),C.updateCourse)
 .put("/addReview/:courseId",protectedRoutes ,C.addCourseReview)

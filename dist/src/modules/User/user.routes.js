@@ -41,14 +41,14 @@ const U = __importStar(require("./controller/user.controller"));
 const authentication_1 = __importStar(require("../../middleware/authentication"));
 const userRouter = express_1.default.Router();
 userRouter
-    .get("/students", U.getStudents)
-    .get("/faculty", U.getFaculty)
-    .get("/organizations", U.getOrganizations)
-    .get("/students/count", U.getStudentsCount)
-    .get("/faculty/count", U.getFacultyCount)
-    .get("/organizations/count", U.getOrganizationsCount)
-    .get("/by-name/:name", U.getUserByName)
-    .get("/byId/:id", U.getUserById)
+    .get("/students", authentication_1.default, U.getStudents)
+    .get("/instructors", authentication_1.default, U.getFaculty)
+    .get("/organizations", authentication_1.default, U.getOrganizations)
+    .get("/students/count", authentication_1.default, U.getStudentsCount)
+    .get("/faculty/count", authentication_1.default, U.getFacultyCount)
+    .get("/organizations/count", authentication_1.default, U.getOrganizationsCount)
+    .get("/by-name/:name", authentication_1.default, U.getUserByName)
+    .get("/byId/:id", authentication_1.default, U.getUserById)
     .put("/update", authentication_1.default, U.updateProfile)
     .patch("/profilePic", authentication_1.default, U.uploadProfilePicture)
     .delete("/delete/:id", authentication_1.default, (0, authentication_1.allowedTo)("admin"), U.deleteUser);

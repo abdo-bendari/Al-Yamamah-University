@@ -10,7 +10,7 @@ const contactRouter = express_1.default.Router();
 contactRouter
     .post("/", authentication_1.default, contact_controller_1.createContact)
     .get("/", authentication_1.default, contact_controller_1.getAllContacts)
-    .get("/:id", authentication_1.default, contact_controller_1.getAllContacts)
+    .get("/:id", authentication_1.default, contact_controller_1.getContactById)
     .patch("/:id", authentication_1.default, contact_controller_1.updateContactStatus)
     .delete("/:id", authentication_1.default, contact_controller_1.deleteContact);
 exports.default = contactRouter;

@@ -27,6 +27,7 @@ const courseValidationSchema = joi_1.default.object({
     })
         .required(),
     isPublished: joi_1.default.boolean().default(false),
+    isPaid: joi_1.default.boolean().default(false),
     creditHours: joi_1.default.number().integer().min(1).required(),
     courseType: joi_1.default.string().valid("required", "elective").required(),
     prerequisites: joi_1.default.array()

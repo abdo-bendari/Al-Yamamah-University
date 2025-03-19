@@ -66,6 +66,7 @@ const CourseSchema = new mongoose_1.Schema({
     },
     rating: { type: Number, default: 0 },
     isPublished: { type: Boolean, default: false },
+    isPaid: { type: Boolean, default: false },
     creditHours: { type: Number, required: true },
     courseType: {
         type: String,

@@ -24,7 +24,6 @@ exports.createContact = (0, catchError_1.default)((req, res, next) => __awaiter(
     const contact = yield Contact_1.default.create({ name, email, message });
     return res.status(201).json({
         message: "Message sent successfully",
-        contact,
     });
 }));
 exports.getAllContacts = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

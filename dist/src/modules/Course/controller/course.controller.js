@@ -12,12 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.getCourseReviews = exports.addCourseReview = exports.getCoursesByCategory = exports.getCoursesByInstructor = exports.getCourseByTitleOrDescription = exports.getCourseById = exports.getAllCourses = exports.createCourse = void 0;
+exports.deleteCourse = exports.updateCourse = exports.getPaidCourses = exports.getFreeCourses = exports.getCourseReviews = exports.addCourseReview = exports.getCoursesByCategory = exports.getCoursesByInstructor = exports.getCourseByTitleOrDescription = exports.getCourseById = exports.getAllCourses = exports.createCourse = void 0;
 const catchError_1 = __importDefault(require("../../../middleware/catchError"));
 const Error_1 = require("../../../utils/Error");
 const Course_1 = __importDefault(require("../../../../database/models/Course"));
 exports.createCourse = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType, } = req.body;
+    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType, isPaid } = req.body;
     if (!title || !code || !description || !instructor || !price || !content || !category || !isPublished || !creditHours || !courseType || !requirementType) {
         return next(new Error_1.AppError("Please provide all required fields", 400));
     }
@@ -38,6 +38,7 @@ exports.createCourse = (0, catchError_1.default)((req, res, next) => __awaiter(v
         courseType,
         prerequisites,
         requirementType,
+        isPaid
     });
     return res.status(201).json({ message: "Course created successfully", newCourse });
 }));
@@ -157,6 +158,20 @@ exports.getCourseReviews = (0, catchError_1.default)((req, res, next) => __await
         return next(new Error_1.AppError("Course not found", 404));
     }
     return res.status(200).json({ status: "success", results: reviews.reviews.length, reviews });
+}));
+exports.getFreeCourses = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const freeCourses = yield Course_1.default.find({ isPaid: false }).select("-__v -createdAt -updatedAt");
+    if (!freeCourses.length) {
+        return next(new Error_1.AppError("No free courses found", 404));
+    }
+    return res.status(200).json({ status: "success", results: freeCourses.length, freeCourses });
+}));
+exports.getPaidCourses = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const paidCourses = yield Course_1.default.find({ isPaid: true }).select("-__v -createdAt -updatedAt");
+    if (!paidCourses.length) {
+        return next(new Error_1.AppError("No paid courses found", 404));
+    }
+    return res.status(200).json({ status: "success", results: paidCourses.length, paidCourses });
 }));
 exports.updateCourse = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { courseId } = req.params;

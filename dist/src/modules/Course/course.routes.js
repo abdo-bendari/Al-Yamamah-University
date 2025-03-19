@@ -50,15 +50,9 @@ courseRouter
     .get("/instructor/:instructorId", authentication_1.default, C.getCoursesByInstructor)
     .get("/category/:categoryId", authentication_1.default, C.getCoursesByCategory)
     .get("/courseReviews/:courseId", authentication_1.default, C.getCourseReviews)
+    .get("/status/freeCourses", authentication_1.default, C.getFreeCourses)
+    .get("/status/paidCourses", authentication_1.default, C.getPaidCourses)
     .put("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin", "faculty"), C.updateCourse)
     .put("/addReview/:courseId", authentication_1.default, C.addCourseReview)
     .delete("/:courseId", authentication_1.default, (0, authentication_1.allowedTo)("admin"), C.deleteCourse);
-// متنساش البجينيشن
-//السيرش اللي فوق بكل حاجه 
-// ترتيب لليفلات 
-// الكاتيجوري 
-// السيرش بحرفين حتي
-// السيرش بالانستراكتور
-// خش علي راوتس اليوزر
-// ضيف الماركس 
 exports.default = courseRouter;
