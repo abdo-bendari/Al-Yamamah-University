@@ -18,6 +18,7 @@ export const createCourse = catchError(async (req: Request, res: Response,next :
       courseType,
       prerequisites,
       requirementType,
+      isPaid
     } = req.body;
     if (!title || !code || !description || !instructor || !price || !content || !category || !isPublished || !creditHours || !courseType || !requirementType) {
         return next(new AppError("Please provide all required fields", 400));
@@ -39,6 +40,7 @@ export const createCourse = catchError(async (req: Request, res: Response,next :
       courseType,
       prerequisites,
       requirementType,
+      isPaid
     });
     return res.status(201).json({ message: "Course created successfully", newCourse });
   });
@@ -187,6 +189,23 @@ export const getCourseReviews = catchError(async (req: Request, res: Response, n
     }
 
     return res.status(200).json({ status: "success", results: reviews.reviews.length, reviews });
+  }
+);
+export const getFreeCourses = catchError(async (req: Request, res: Response, next: NextFunction) => {
+    const freeCourses = await Course.find({ isPaid: false }).select("-__v -createdAt -updatedAt");
+    if (!freeCourses.length) {
+      return next(new AppError("No free courses found", 404));
+    }
+    return res.status(200).json({ status: "success", results: freeCourses.length, freeCourses });
+  }
+);
+export const getPaidCourses = catchError(async (req: Request, res: Response, next: NextFunction) => {
+    const paidCourses = await Course.find({ isPaid: true }).select("-__v -createdAt -updatedAt");
+    if (!paidCourses.length) {
+      return next(new AppError("No paid courses found", 404));
+    }
+
+    return res.status(200).json({ status: "success", results: paidCourses.length, paidCourses });
   }
 );
 

@@ -15,6 +15,7 @@ interface ICourse extends Document {
   }[];
   category: mongoose.Types.ObjectId;
   isPublished: boolean;
+  isPaid: boolean;
   creditHours: number;
   courseType: "required" | "elective";
   prerequisites?: mongoose.Types.ObjectId[];
@@ -56,6 +57,7 @@ const CourseSchema = new Schema<ICourse>(
     },
     rating: { type: Number, default: 0 },
     isPublished: { type: Boolean, default: false },
+    isPaid: { type: Boolean, default: false },
     creditHours: { type: Number, required: true },
     courseType: {
       type: String,
