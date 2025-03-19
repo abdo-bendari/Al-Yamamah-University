@@ -23,6 +23,7 @@ import mongoose from "mongoose";
     })
     .required(),
   isPublished: Joi.boolean().default(false),
+  isPaid: Joi.boolean().default(false),
   creditHours: Joi.number().integer().min(1).required(),
   courseType: Joi.string().valid("required", "elective").required(),
   prerequisites: Joi.array()
