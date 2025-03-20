@@ -45,7 +45,9 @@ const courseValidationSchema = joi_1.default.object({
             .items(joi_1.default.object({
             title: joi_1.default.string().trim().required(),
             videoUrl: joi_1.default.string().trim().uri().required(),
-            materials: joi_1.default.array().items(joi_1.default.string().trim().uri()).optional(),
+            materials: joi_1.default.array()
+                .items(joi_1.default.string().trim().uri())
+                .optional(),
         }))
             .required(),
     }))
@@ -63,5 +65,6 @@ const courseValidationSchema = joi_1.default.object({
             .required(),
     }))
         .default([]),
+    imageUrl: joi_1.default.string()
 });
 exports.default = courseValidationSchema;

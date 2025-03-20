@@ -16,12 +16,20 @@ exports.deleteContact = exports.updateContactStatus = exports.getContactById = e
 const Error_1 = require("../../../utils/Error");
 const catchError_1 = __importDefault(require("../../../middleware/catchError"));
 const Contact_1 = __importDefault(require("../../../../database/models/Contact"));
+const sendEmail_1 = __importDefault(require("../../../utils/sendEmail"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 exports.createContact = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, message } = req.body;
     if (!name || !email || !message) {
         return next(new Error_1.AppError("Please provide all required fields", 400));
     }
     const contact = yield Contact_1.default.create({ name, email, message });
+    yield (0, sendEmail_1.default)({
+        to: process.env.EMAIL,
+        subject: "New Contact Message Received",
+        text: `You have received a new message from ${name} (${email}):\n\n"${message}"`,
+    });
     return res.status(201).json({
         message: "Message sent successfully",
     });

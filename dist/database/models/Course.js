@@ -75,5 +75,6 @@ const CourseSchema = new mongoose_1.Schema({
     },
     prerequisites: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Course" }],
     requirementType: { type: String, enum: ["college", "institution"] },
+    imageUrl: { type: String },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model("Course", CourseSchema);

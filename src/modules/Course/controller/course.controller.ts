@@ -18,7 +18,8 @@ export const createCourse = catchError(async (req: Request, res: Response,next :
       courseType,
       prerequisites,
       requirementType,
-      isPaid
+      isPaid,
+      imageUrl
     } = req.body;
     if (!title || !code || !description || !instructor || !price || !content || !category || !isPublished || !creditHours || !courseType || !requirementType) {
         return next(new AppError("Please provide all required fields", 400));
@@ -40,10 +41,12 @@ export const createCourse = catchError(async (req: Request, res: Response,next :
       courseType,
       prerequisites,
       requirementType,
-      isPaid
+      isPaid,
+      imageUrl,
     });
     return res.status(201).json({ message: "Course created successfully", newCourse });
   });
+
 
 
 export const getAllCourses = catchError(async (req: Request, res: Response ,next : NextFunction) => {
@@ -214,7 +217,7 @@ export const updateCourse = catchError(async (req: Request, res: Response, next:
     if (!courseId) {
       return next(new AppError("Course ID is required", 400));
     }
-    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType } = req.body;
+    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType ,imageUrl} = req.body;
     const updatedCourse = await Course.findByIdAndUpdate(courseId, {
       title,
       code,
@@ -227,6 +230,7 @@ export const updateCourse = catchError(async (req: Request, res: Response, next:
       creditHours,
       courseType,
       prerequisites,
+      imageUrl,
       requirementType,
     }, { new: true });
     if (!updatedCourse) {

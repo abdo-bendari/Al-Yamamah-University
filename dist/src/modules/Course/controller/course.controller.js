@@ -17,7 +17,7 @@ const catchError_1 = __importDefault(require("../../../middleware/catchError"));
 const Error_1 = require("../../../utils/Error");
 const Course_1 = __importDefault(require("../../../../database/models/Course"));
 exports.createCourse = (0, catchError_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType, isPaid } = req.body;
+    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType, isPaid, imageUrl } = req.body;
     if (!title || !code || !description || !instructor || !price || !content || !category || !isPublished || !creditHours || !courseType || !requirementType) {
         return next(new Error_1.AppError("Please provide all required fields", 400));
     }
@@ -38,7 +38,8 @@ exports.createCourse = (0, catchError_1.default)((req, res, next) => __awaiter(v
         courseType,
         prerequisites,
         requirementType,
-        isPaid
+        isPaid,
+        imageUrl,
     });
     return res.status(201).json({ message: "Course created successfully", newCourse });
 }));
@@ -178,7 +179,7 @@ exports.updateCourse = (0, catchError_1.default)((req, res, next) => __awaiter(v
     if (!courseId) {
         return next(new Error_1.AppError("Course ID is required", 400));
     }
-    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType } = req.body;
+    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType, imageUrl } = req.body;
     const updatedCourse = yield Course_1.default.findByIdAndUpdate(courseId, {
         title,
         code,
@@ -191,6 +192,7 @@ exports.updateCourse = (0, catchError_1.default)((req, res, next) => __awaiter(v
         creditHours,
         courseType,
         prerequisites,
+        imageUrl,
         requirementType,
     }, { new: true });
     if (!updatedCourse) {

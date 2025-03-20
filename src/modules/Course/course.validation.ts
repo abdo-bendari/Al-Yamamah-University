@@ -1,7 +1,7 @@
 import Joi from "joi";
 import mongoose from "mongoose";
 
- const courseValidationSchema = Joi.object({
+const courseValidationSchema = Joi.object({
   title: Joi.string().trim().min(3).max(100).required(),
   code: Joi.string().trim().required(),
   description: Joi.string().trim().min(10).max(1000).required(),
@@ -45,7 +45,9 @@ import mongoose from "mongoose";
             Joi.object({
               title: Joi.string().trim().required(),
               videoUrl: Joi.string().trim().uri().required(),
-              materials: Joi.array().items(Joi.string().trim().uri()).optional(),
+              materials: Joi.array()
+                .items(Joi.string().trim().uri())
+                .optional(),
             })
           )
           .required(),
@@ -67,6 +69,7 @@ import mongoose from "mongoose";
       })
     )
     .default([]),
+  imageUrl: Joi.string()
 });
 
 export default courseValidationSchema;

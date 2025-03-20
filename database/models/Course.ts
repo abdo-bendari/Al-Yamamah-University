@@ -20,6 +20,7 @@ interface ICourse extends Document {
   courseType: "required" | "elective";
   prerequisites?: mongoose.Types.ObjectId[];
   requirementType?: "college" | "institution";
+  imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -66,8 +67,10 @@ const CourseSchema = new Schema<ICourse>(
     },
     prerequisites: [{ type: Schema.Types.ObjectId, ref: "Course" }],
     requirementType: { type: String, enum: ["college", "institution"] },
+    imageUrl: { type: String },
   },
   { timestamps: true }
 );
+
 
 export default mongoose.model<ICourse>("Course", CourseSchema);

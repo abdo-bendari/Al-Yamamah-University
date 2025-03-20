@@ -10,7 +10,7 @@ const validation = (schema: ObjectSchema): RequestHandler => {
     };
 
     const { error } = schema.validate(inputData, { abortEarly: false });
-
+    
     if (error) {
       res.status(400).json({ message: "Validation error", error: error.details });
       return;
