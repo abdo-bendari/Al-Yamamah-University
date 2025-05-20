@@ -10,6 +10,7 @@ import enrollmentRouter from "./Enrollment/enrollment.routes";
 import paymentRouter from "./Payment/payment.routes";
 import contactRouter from "./ContactUs/contact.routes";
 import markRouter from "./Mark/mark.routes";
+import programRouter from "./Program/program.routes";
 
 const bootstrap = (app: Express) => {
   process.on("uncaughtException", (err: Error) => {
@@ -27,6 +28,7 @@ const bootstrap = (app: Express) => {
   app.use(`${baseUrl}/payments`, paymentRouter);
   app.use(`${baseUrl}/contact`, contactRouter);
   app.use(`${baseUrl}/marks`,markRouter );
+  app.use(`${baseUrl}/programs`,programRouter );
   app.use("*", (req: Request, res: Response, next: NextFunction) => {
     next(new AppError("Route not found", 404));
   });
