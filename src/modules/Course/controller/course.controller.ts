@@ -217,6 +217,52 @@ export const getPaidCourses = catchError(async (req: Request, res: Response, nex
     return res.status(200).json({ status: "success", results: paidCourses.length, paidCourses });
   }
 );
+export const getFullCoursesByProgram = catchError(async (req: Request, res: Response, next: NextFunction) => {
+  const { programId } = req.params;
+
+  const courses = await Course.find({ program: programId })
+    .populate("program", "title programCode") 
+    .populate("level", "name")         
+    .populate("instructor", "firstName lastName") 
+    .populate({
+      path: "prerequisites",
+      select: "title code",                 
+    });
+
+  if (!courses.length) {
+    return next(new AppError("No courses found for this program", 404));
+  }
+
+  return res.status(200).json({
+    status: "success",
+    results: courses.length,
+    courses,
+  });
+});
+export const getFullCoursesByLevel = catchError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { levelId } = req.params;
+
+    const courses = await Course.find({ level: levelId })
+      .populate("program", "title programCode") 
+      .populate("level", "name")         
+      .populate("instructor", "firstName lastName") 
+      .populate({
+        path: "prerequisites",
+        select: "title code",                 
+      });
+
+    if (!courses.length) {
+      return next(new AppError("No courses found for this level", 404));
+    }
+
+    return res.status(200).json({
+      status: "success",
+      results: courses.length,
+      courses,
+    });
+  }
+);
 
 export const updateCourse = catchError(async (req: Request, res: Response, next: NextFunction) => {
     const { courseId } = req.params;
