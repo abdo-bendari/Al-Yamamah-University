@@ -223,7 +223,7 @@ export const updateCourse = catchError(async (req: Request, res: Response, next:
     if (!courseId) {
       return next(new AppError("Course ID is required", 400));
     }
-    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType ,imageUrl} = req.body;
+    const { title, code, description, instructor, price, content, category, isPublished, creditHours, courseType, prerequisites, requirementType ,imageUrl,program,level,courseOutcome} = req.body;
     const updatedCourse = await Course.findByIdAndUpdate(courseId, {
       title,
       code,
@@ -237,7 +237,7 @@ export const updateCourse = catchError(async (req: Request, res: Response, next:
       courseType,
       prerequisites,
       imageUrl,
-      requirementType,
+      requirementType,program,level,courseOutcome
     }, { new: true });
     if (!updatedCourse) {
       return next(new AppError("Course not found", 404));
