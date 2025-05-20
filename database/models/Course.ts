@@ -5,6 +5,7 @@ interface ICourse extends Document {
   code: string;
   description: string;
   instructor: mongoose.Types.ObjectId;
+  level :mongoose.Types.ObjectId;
   price?: number;
   studentsEnrolled: number;
   reviews: { comment: string; rating: number; user: mongoose.Types.ObjectId }[];
@@ -14,6 +15,8 @@ interface ICourse extends Document {
     videos: { title: string; videoUrl: string; materials?: string[] }[];
   }[];
   category: mongoose.Types.ObjectId;
+  program: mongoose.Types.ObjectId;
+  courseOutcome: string;
   isPublished: boolean;
   isPaid: boolean;
   creditHours: number;
@@ -46,6 +49,8 @@ const CourseSchema = new Schema<ICourse>(
       },
     ],
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    level: { type: Schema.Types.ObjectId, ref: "Level", required: true },
+    program: { type: Schema.Types.ObjectId, ref: "Program", required: true },
     reviews: {
       type: [
         {
@@ -57,6 +62,7 @@ const CourseSchema = new Schema<ICourse>(
       default: [],
     },
     rating: { type: Number, default: 0 },
+    courseOutcome: { type: String, required: true },
     isPublished: { type: Boolean, default: false },
     isPaid: { type: Boolean, default: false },
     creditHours: { type: Number, required: true },

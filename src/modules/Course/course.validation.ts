@@ -4,8 +4,16 @@ import mongoose from "mongoose";
 const courseValidationSchema = Joi.object({
   title: Joi.string().trim().min(3).max(100).required(),
   code: Joi.string().trim().required(),
-  description: Joi.string().trim().min(10).max(1000).required(),
+  description: Joi.string().trim().min(10).max(5000).required(),
+  courseOutcome: Joi.string().trim().min(10).max(10000).required(),
   instructor: Joi.string()
+    .custom((value, helpers) => {
+      return mongoose.Types.ObjectId.isValid(value)
+        ? value
+        : helpers.error("any.invalid");
+    })
+    .required(),
+  level: Joi.string()
     .custom((value, helpers) => {
       return mongoose.Types.ObjectId.isValid(value)
         ? value
@@ -16,6 +24,13 @@ const courseValidationSchema = Joi.object({
   studentsEnrolled: Joi.number().integer().min(0).default(0),
   rating: Joi.number().min(0).max(5).default(0),
   category: Joi.string()
+    .custom((value, helpers) => {
+      return mongoose.Types.ObjectId.isValid(value)
+        ? value
+        : helpers.error("any.invalid");
+    })
+    .required(),
+  program: Joi.string()
     .custom((value, helpers) => {
       return mongoose.Types.ObjectId.isValid(value)
         ? value
@@ -69,7 +84,7 @@ const courseValidationSchema = Joi.object({
       })
     )
     .default([]),
-  imageUrl: Joi.string()
+  imageUrl: Joi.string(),
 });
 
 export default courseValidationSchema;

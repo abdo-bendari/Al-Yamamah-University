@@ -13,15 +13,18 @@ export const createCourse = catchError(async (req: Request, res: Response,next :
       price,
       content,
       category,
+      level,
       isPublished,
       creditHours,
       courseType,
       prerequisites,
       requirementType,
       isPaid,
+      courseOutcome,
+      program,
       imageUrl
     } = req.body;
-    if (!title || !code || !description || !instructor || !price || !content || !category || !isPublished || !creditHours || !courseType || !requirementType) {
+    if (!title || !code || !description ||!level || !instructor || !price || !content || !category || !isPublished || !creditHours || !courseType || !requirementType || !program || !courseOutcome) {
         return next(new AppError("Please provide all required fields", 400));
     }
       const existingCourse = await Course.findOne({ title });
@@ -42,6 +45,9 @@ export const createCourse = catchError(async (req: Request, res: Response,next :
       prerequisites,
       requirementType,
       isPaid,
+      program,
+      level,
+      courseOutcome,
       imageUrl,
     });
     return res.status(201).json({ message: "Course created successfully", newCourse });
