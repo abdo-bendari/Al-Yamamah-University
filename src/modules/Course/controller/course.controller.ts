@@ -61,7 +61,13 @@ export const getAllCourses = catchError(async (req: Request, res: Response ,next
   const limitNumber = Number(limit) || 6;
   const skip = (pageNumber - 1) * limitNumber;
 
-  const courses = await Course.find().skip(skip).limit(limitNumber).select("-__v -createdAt -updatedAt");
+  const courses = await Course.find().skip(skip).limit(limitNumber).select("-__v -createdAt -updatedAt").populate("program", "title programCode") 
+    .populate("level", "name")         
+    .populate("instructor", "firstName lastName") 
+    .populate({
+      path: "prerequisites",
+      select: "title code",                 
+    });
   if (courses.length === 0) {
     return next(new AppError("No courses found", 404));
   }
@@ -80,7 +86,13 @@ export const getCourseById = catchError(async (req: Request, res: Response, next
     if (!id) {
       return next(new AppError("ID is required", 400));
     }
-    const course = await Course.findById(id).select("-__v -createdAt -updatedAt");
+    const course = await Course.findById(id).select("-__v -createdAt -updatedAt").populate("program", "title programCode") 
+    .populate("level", "name")         
+    .populate("instructor", "firstName lastName") 
+    .populate({
+      path: "prerequisites",
+      select: "title code",                 
+    });
     if (!course) {
       return next(new AppError("Course not found", 404));
     }
@@ -95,7 +107,13 @@ export const getCourseByTitleOrDescription = catchError(async (req: Request, res
       { title: { $regex: new RegExp(search, "i") } }, 
       { description: { $regex: new RegExp(search, "i") } }
     ]
-  }).select("-__v -createdAt -updatedAt");
+  }).select("-__v -createdAt -updatedAt").populate("program", "title programCode") 
+    .populate("level", "name")         
+    .populate("instructor", "firstName lastName") 
+    .populate({
+      path: "prerequisites",
+      select: "title code",                 
+    });
 
   if (!courses.length) {
     return next(new AppError("No courses found", 404));
