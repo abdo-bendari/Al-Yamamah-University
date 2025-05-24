@@ -6,7 +6,7 @@ import catchError from "../../../middleware/catchError";
 
 const getUsersByRole = async (role: string, req: Request, res: Response, next: NextFunction) => {
     const { page = 1 } = req.query;
-    const limit = 10; 
+    const limit = 20; 
 
     const totalUsers = await User.countDocuments({ role });
 
@@ -80,12 +80,12 @@ export const updateProfile = catchError(async (req: Request, res: Response, next
     if (!userId) return next(new AppError("User not found", 404));
 
     const { firstName, lastName, phone, timezone ,biography, publications ,conferences,teaching,
-    services } = req.body;
+    services,workingHours } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
         userId,
         { firstName, lastName, phone, timezone,biography, publications ,conferences,teaching,
-    services },
+    services,workingHours },
         { new: true , runValidators: true ,select: "-password -email"}
     );
 
