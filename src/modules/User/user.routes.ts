@@ -18,6 +18,7 @@ userRouter
 .get("/byId/:id", protectedRoutes,U.getUserById)
 
 .put("/update",protectedRoutes,U.updateProfile)
+.put("/:userId/updateUser",U.updateUser)
 .patch("/profilePic",protectedRoutes,U.uploadProfilePicture)
 
 .delete("/delete/:id",protectedRoutes,allowedTo("admin"),U.deleteUser)

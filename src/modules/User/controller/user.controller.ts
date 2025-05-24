@@ -118,3 +118,14 @@ export const deleteUser = catchError(async (req: Request, res: Response, next: N
     return res.status(200).json({ message: "Account deleted successfully" });
 });
 
+export const updateUser = catchError(async (req: Request, res: Response, next: NextFunction) => {
+    const {userId} = req.params;
+    if (!userId) return next(new AppError("User not found", 404));
+
+    const user = await User.findByIdAndUpdate(userId, req.body, { new: true, runValidators: true, select: "-password -email" });
+
+    if (!user) return next(new AppError("User not found", 404));
+
+    return res.status(200).json({ message: "User updated successfully", user });
+});
+
