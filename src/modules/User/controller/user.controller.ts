@@ -6,7 +6,7 @@ import catchError from "../../../middleware/catchError";
 
 const getUsersByRole = async (role: string, req: Request, res: Response, next: NextFunction) => {
     const { page = 1 } = req.query;
-    const limit = 20; 
+    const limit = 50; 
 
     const totalUsers = await User.countDocuments({ role });
 
@@ -70,6 +70,14 @@ export const getUserById = catchError(async (req: Request, res: Response, next: 
     const { id } = req.params;
     
     const user = await User.findById(id).select("firstName lastName role");
+    if (!user) return next(new AppError("User not found", 404));
+    
+    return res.status(200).json({ status: 200, user });
+});
+export const getFacultyById = catchError(async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    
+    const user = await User.findById(id);
     if (!user) return next(new AppError("User not found", 404));
     
     return res.status(200).json({ status: 200, user });

@@ -16,6 +16,7 @@ userRouter
 
 .get("/by-name/:name", protectedRoutes,U.getUserByName)
 .get("/byId/:id", protectedRoutes,U.getUserById)
+.get("/FacultyById/:id", protectedRoutes,U.getFacultyById)
 
 .put("/update",protectedRoutes,U.updateProfile)
 .put("/:userId/updateUser",U.updateUser)
