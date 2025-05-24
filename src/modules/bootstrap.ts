@@ -4,7 +4,6 @@ import globalError from "../middleware/globalError";
 import userRouter from "./User/user.routes";
 import authRouter from "./Auth/auth.routes";
 import courseRouter from "./Course/course.routes";
-import categoryRouter from "./Category/category.routes";
 import levelRouter from "./Level/level.routes";
 import enrollmentRouter from "./Enrollment/enrollment.routes";
 import paymentRouter from "./Payment/payment.routes";
@@ -22,7 +21,6 @@ const bootstrap = (app: Express) => {
   app.use(`${baseUrl}/auth`, authRouter);
   app.use(`${baseUrl}/users`, userRouter);
   app.use(`${baseUrl}/courses`, courseRouter);
-  app.use(`${baseUrl}/categories`, categoryRouter);
   app.use(`${baseUrl}/levels`, levelRouter);
   app.use(`${baseUrl}/enrollments`, enrollmentRouter);
   app.use(`${baseUrl}/payments`, paymentRouter);

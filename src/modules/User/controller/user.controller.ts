@@ -11,7 +11,7 @@ const getUsersByRole = async (role: string, req: Request, res: Response, next: N
     const totalUsers = await User.countDocuments({ role });
 
     const users = await User.find({ role })
-        .select("firstName lastName role")
+        .select("firstName lastName role profilePic biography publications conferences teaching services workingHours timezone phone email")
         .skip((Number(page) - 1) * limit)
         .limit(limit)
         .sort({ createdAt: -1 })
@@ -79,11 +79,13 @@ export const updateProfile = catchError(async (req: Request, res: Response, next
     const userId = req.user?.userId
     if (!userId) return next(new AppError("User not found", 404));
 
-    const { firstName, lastName, phone, timezone } = req.body;
+    const { firstName, lastName, phone, timezone ,biography, publications ,conferences,teaching,
+    services } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { firstName, lastName, phone, timezone },
+        { firstName, lastName, phone, timezone,biography, publications ,conferences,teaching,
+    services },
         { new: true , runValidators: true ,select: "-password -email"}
     );
 

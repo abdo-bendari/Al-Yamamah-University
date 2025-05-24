@@ -8,6 +8,12 @@ export interface IUser extends Document {
   phone: string;
   email: string;
   password: string;
+  biography: string;
+  publications: string;
+    conferences: string;
+    teaching: string;
+    services: string;
+workingHours : string;
   timezone: string;
   otpCode?: string;
   otpExpires?: Date;
@@ -40,7 +46,13 @@ const UserSchema: Schema<IUser> = new Schema(
     password: { type: String, required: true, minlength: 6 },
     timezone: { type: String, required: true },
     otpCode: { type: String },
+    biography: { type: String },
+    publications: { type: String },
+    conferences: { type: String },
+    teaching: { type: String },
+    services: { type: String },
     otpExpires: { type: Date },
+    workingHours: { type: String },
     profilePic: {
       type: String,
       default: "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg",
