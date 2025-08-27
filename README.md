@@ -1,8 +1,7 @@
 
 # 🎓 University Course Management System
 
-A **production-ready backend system** built with **Node.js + TypeScript** to manage university programs, courses, levels, students' marks, enrollments, and more.  
-This project simulates a **real-world academic management system** and is fully designed for extensibility, performance, and security.
+A **production-ready backend system** built with **Node.js + TypeScript,** developed as a **real-world academic management platform and currently deployed in a university’s production environment**. The system handles programs, courses, levels, enrollments, and student marks with high reliability while ensuring data integrity, scalability, and security. With features like Multer for file uploads and Nodemailer for automated communication, this project goes beyond a prototype — **it is a fully operational solution actively supporting academic processes at the university.**
 
 ---
 
@@ -52,6 +51,14 @@ This project simulates a **real-world academic management system** and is fully 
 - **TypeScript**
 - **MongoDB** + **Mongoose**
 - **Nodemailer** (emails)
+- **Cors**
+- **Morgan**
+- **Helmet**
+- **Nodemon**
+- **Joi** (validation)
+- **Jsonwebtoken**
+- **Dotenv**
+- **Bcrypt**
 - **Multer** (file uploads)
 - **Stripe** (payments)
 - **JWT** (authentication)
